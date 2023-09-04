@@ -12,6 +12,7 @@ import { useClosestMedia } from '../components/test';
 
 function NavBarPage() {
   const cart = useContext(CartContext);
+  console.log(cart.items)
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -41,7 +42,7 @@ function NavBarPage() {
   for(let i = 0; i < cart.items.length;){
     
     cartItems.push(cart.items[i]);
-    // console.log("SOMETHINGAF: ", cart.items[i]);
+    console.log("SOMETHINGAF: ", cart.items[i]);
     i++
   }
 
@@ -61,54 +62,27 @@ function NavBarPage() {
     })
   }
   const productsCount = cart.items.reduce((sum, product) => sum+ product.quantity, 0);
-
-
-
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setIsMenuOpen(false);
-  //     setShowSidebar(false);
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth <= 768) { // Adjust the breakpoint as needed
-  //       document.getElementById('menu-btn').addEventListener('click', toggleMenu);
-  //     } else {
-  //       document.getElementById('menu-btn').removeEventListener('click', toggleMenu);
-  //       setIsMenuOpen(false);
-  //       setShowSidebar(false);
-  //     }
-  //   };
-
-  //   window.addEventListener('resize', handleResize);
-
-  //   // Initial setup
-  //   handleResize();
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
-
   
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsMenuOpen(false);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   return (
     <header className="header">
       <section className="flex">
-        <Link to="/home" className="logo">
-          <img src="images/menu.png" alt="Logo" />
-        </Link>
         {/* <!-- <h1>Café IEUM</h1> --> */}
-        <nav className={`navbar ${isMenuOpen ? 'active' : ''}`}>
+        <nav className='navbar'>
           <Link to="/home">집</Link>
           <Link to="/about">우리에 관해서</Link>
           <Link to="/menu">메뉴</Link>
@@ -128,10 +102,9 @@ function NavBarPage() {
                 <p>Items in your cart</p>
                 {cart.items.map((currentProduct, idx) => (
                   // <h1>{currentProduct.title}</h1>
-                  <>
+                  
                   <CartProduct key={idx} id={currentProduct.id} quantity={currentProduct.quantity}></CartProduct>
                   
-                  </>
                   
                   
                 ))}
@@ -159,9 +132,9 @@ function NavBarPage() {
 
 
 
-        <div id="menu-btn" className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`} ></div>
-      </section>
-    </header>
+        <div id="menu-btn" className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></div>
+        </section>
+        </header>
   );
 }
 
